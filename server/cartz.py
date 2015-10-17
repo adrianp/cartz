@@ -4,6 +4,7 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from config import envs
+from data.game import Game
 from data.player import Player
 from utils import random_string
 
@@ -12,6 +13,12 @@ app = Flask(__name__, static_url_path='')
 CORS(app)
 
 games = {}
+
+
+@app.after_request
+def apply_caching(response):
+    response.headers["X-API-Version"] = "1.0.0"
+    return response
 
 
 @app.route("/")
@@ -25,16 +32,21 @@ def new_game():
 
     # if games does not exist, create id
     if id not in games:
-        games[id] = {"players": {}, "id": id}
+        games[id] = Game(id)
 
-    noPlayers = len(games[id]["players"].keys())
-
-    if noPlayers < 2:
-        player = random_string(10)
-        games[id]["players"][player] = Player(player)
-        return jsonify({"joined": True, "id": id, "player": player}), 200
+    if games[id].getPlayerCount() < 2:
+        player = Player(random_string(10))
+        games[id].addPlayer = player
+        return jsonify({
+            "joined": True,
+            "id": games[id].gameID,
+            "player": player.playerID
+        }), 200
     else:
-        return jsonify({"joined": False, "id": id}), 403
+        return jsonify({
+            "joined": False,
+            "id": id
+        }), 403
 
 
 @app.route("/api/stopgame", methods=["POST"])
