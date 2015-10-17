@@ -8,7 +8,7 @@
     "babel": "babel src --out-dir lib",
     "watch": "babel src --watch --out-dir lib",
     "pack": "browserify lib/app.js -o bin/app.min.js",
-    "watchify": "watchify lib/app.js -o bin/app.min.js"
+    "watchify": "watchify lib/app.js -v -o bin/app.min.js"
   },
   "author": "Lucian Parfeni",
   "license": "MIT",
