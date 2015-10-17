@@ -1,4 +1,4 @@
-const host = 'http://192.168.2.121:8080';
+const host = 'http://192.168.2.121:5000';
 
 const newGame = (gameId) => {
 	fetch(host + '/api/newgame', {
@@ -10,8 +10,12 @@ const newGame = (gameId) => {
 		body: JSON.stringify({
 			id: gameId
 		})
-	}).then((resp) => {
-		console.log('resp', resp);
+	})
+	.then((response) => {
+		return response.json();
+	})
+	.then((body) => {
+		console.log(body);
 	});
 };
 
