@@ -4,67 +4,59 @@ document.addEventListener('stateChanged', (e) => {
 	console.log('e', e.detail);
 });
 
-export class Card {
-	constructor() {
-		//
+const addCard = (cardInfos, opponent, battlefield) => {
+	//
+	console.log(cardInfos);
+	const card = dom({
+		'type': 'div',
+		'attributes': {
+			'class': 'card' +
+				(opponent === true ? ' flipped' : '')
+		},
+		'content': [
+			dom({
+				'type': 'div',
+				'attributes': {
+					'class': 'mana'
+				},
+				'content': 'ceva'
+			}),
+			dom({
+				'type': 'div',
+				'attributes': {
+					'class': 'attack'
+				},
+				'content': 'ceva'
+			}),
+			dom({
+				'type': 'div',
+				'attributes': {
+					'class': 'defense'
+				},
+				'content': 'ceva'
+			})
+		]
+	});
+
+	let wrapper = null;
+
+	if (opponent && battlefield) {
+		wrapper = document.getElementById('opponentBattlefieldCardsWrapper');
+	} else if (opponent) {
+		wrapper = document.getElementById('opponentCardsWrapper');
+	} else if (battlefield) {
+		wrapper = document.getElementById('heroBattlefieldCardsWrapper');
+	} else {
+		wrapper = document.getElementById('heroCardsWrapper');
 	}
 
-    addCard(cardInfos, opponent, battlefield) {
-        //
-		console.log(cardInfos);
-		const card = dom({
-			'type': 'div',
-			'attributes': {
-				'class': 'card' +
-					(opponent === true ? 'flipped' : '')
-			},
-			'content': [
-				dom({
-					'type': 'div',
-					'attributes': {
-						'class': 'mana'
-					},
-					'content': 'ceva'
-				}),
-				dom({
-					'type': 'div',
-					'attributes': {
-						'class': 'attack'
-					},
-					'content': 'ceva'
-				}),
-				dom({
-					'type': 'div',
-					'attributes': {
-						'class': 'defense'
-					},
-					'content': 'ceva'
-				})
-			]
-		});
+	wrapper.appendChild(card);
 
-		let wrapper = null;
+};
 
-		if (opponent && battlefield) {
-			wrapper = document.getElementById('opponentBattlefieldCardsWrapper');
-		} else if (opponent) {
-			wrapper = document.getElementById('opponentCardsWrapper');
-		} else if (battlefield) {
-			wrapper = document.getElementById('heroBattlefieldCardsWrapper');
-		} else {
-			wrapper = document.getElementById('heroCardsWrapper');
-		}
-
-		wrapper.appendChild(card);
-
-    }
-
-    removeCard() {
-        //
-    }
+const removeCard = () => {
+	//
 }
-
-module.exports.Card = Card;
 
 
 const createGameZone = () => {
@@ -181,11 +173,42 @@ const createGameZone = () => {
 };
 
 const updateUi = (state) => {
-	// parcurge state si deseneaza ui-ul in functie de ce contine state
+	for(playerHand of state.player.hand) {
+	    addCard(null, false, false);
+	}
+	for(playerPlayed of state.player.played) {
+	    addCard(null, false, true);
+	}
+	for(enemyPlayed of state.enemy.played) {
+	    addCard(null, true, true);
+	}
+	for (let i = state.enemy.hand; i > 0; i--) {
+		addCard(null, true, false);
+	}
+	document.getElementById('heroLife').textContent = state.player.hp;
+	document.getElementById('opponentLife').textContent = state.enemy.hp;
+	document.getElementById('heroMana').textContent = state.player.mana;
+	document.getElementById('opponentMana').textContent = state.enemy.mana;
 };
 
-document.addEventListener('playerReady', (state) => {
-	updateUi(state);
+const currentState = {
+	player: {
+		hand: [],
+		played: [],
+		hp: 30,
+		mana: 1
+	},
+	enemy: {
+		hand: 3,
+		played: [],
+		hp: 30,
+		mana: 1
+	},
+	turn: 'player'
+};
+
+document.addEventListener('stateChanged', () => {
+	updateUi(currentState);
 });
 
 // document.getElementById('endTurn').addEventListener('click', () => {

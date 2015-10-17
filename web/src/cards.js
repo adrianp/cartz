@@ -1,7 +1,7 @@
 class Card {
 	// attack
 	// defense
-	// cost
+	// cost/mana
 	// special
 	constructor(a, d, c, s) {
 		this.a = a;
