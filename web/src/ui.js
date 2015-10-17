@@ -2,6 +2,7 @@ const dom = require('./DOMaker.js');
 
 document.addEventListener('stateChanged', (e) => {
 	console.log('e', e.detail);
+	updateUi(e.detail);
 });
 
 const addCard = (cardInfos, opponent, battlefield) => {
@@ -174,15 +175,15 @@ const createGameZone = () => {
 
 const updateUi = (state) => {
 	for(playerHand of state.player.hand) {
-	    addCard(null, false, false);
+	    addCard(playerHand, false, false);
 	}
 	for(playerPlayed of state.player.played) {
-	    addCard(null, false, true);
+	    addCard(playerPlayed, false, true);
 	}
 	for(enemyPlayed of state.enemy.played) {
-	    addCard(null, true, true);
+	    addCard(enemyPlayed, true, true);
 	}
-	for (let i = state.enemy.hand; i > 0; i--) {
+	for (let i = 0; i < state.enemy.hand; i++) {
 		addCard(null, true, false);
 	}
 	document.getElementById('heroLife').textContent = state.player.hp;
@@ -191,25 +192,6 @@ const updateUi = (state) => {
 	document.getElementById('opponentMana').textContent = state.enemy.mana;
 };
 
-const currentState = {
-	player: {
-		hand: [],
-		played: [],
-		hp: 30,
-		mana: 1
-	},
-	enemy: {
-		hand: 3,
-		played: [],
-		hp: 30,
-		mana: 1
-	},
-	turn: 'player'
-};
-
-document.addEventListener('stateChanged', () => {
-	updateUi(currentState);
-});
 
 // document.getElementById('endTurn').addEventListener('click', () => {
 // 	document.dispatchEvent(new Event('endTurn'));
