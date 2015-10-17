@@ -1,5 +1,12 @@
 const net = require('./net.js');
 
+let gameId = '';
+let userId = '';
+const init = (id, uId) => {
+	gameId = id;
+	userId = uId;
+};
+
 const playCard = (i) => {
 	// player.play(i);
 	console.log('playCard', i);
@@ -39,20 +46,13 @@ let currentState = {
 	turn: 'player'
 };
 
-const getCurrentState = () => {
-	return currentState;
-};
-
-const stateChanged = new CustomEvent('stateChanged', {'detail': getCurrentState()});
-
 const updateGameState = () => {
-	document.dispatchEvent(stateChanged);
-
-	net.getState().then((resp) => {
-		console.log('state', resp);
-		currentState = resp.state;
-		document.dispatchEvent(stateChanged);
+	net.getState(gameId, userId).then((state) => {
+		currentState = state;
+		const stateEv = new CustomEvent('stateChanged', {'detail': state});
+		document.dispatchEvent(stateEv);
 	});
 };
 
+module.exports.init = init;
 module.exports.updateGameState = updateGameState;
