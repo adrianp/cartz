@@ -1,9 +1,11 @@
+import subprocess
 import sys
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 from config import envs
+from data.game import Game
 from data.player import Player
 from utils import random_string
 
@@ -12,6 +14,13 @@ app = Flask(__name__, static_url_path='')
 CORS(app)
 
 games = {}
+gitSHA = subprocess.check_output(["git", "rev-parse", "HEAD"]).strip()
+
+
+@app.after_request
+def apply_caching(response):
+    response.headers["X-API-Version"] = gitSHA
+    return response
 
 
 @app.route("/")
@@ -19,25 +28,30 @@ def index():
     return app.send_static_file("index.html")
 
 
-@app.route("/api/newgame", methods=["POST"])
+@app.route("/api/game/new", methods=["POST"])
 def new_game():
     id = request.json["id"]
 
     # if games does not exist, create id
     if id not in games:
-        games[id] = {"players": {}, "id": id}
+        games[id] = Game(id)
 
-    noPlayers = len(games[id]["players"].keys())
-
-    if noPlayers < 2:
-        player = random_string(10)
-        games[id]["players"][player] = Player(player)
-        return jsonify({"joined": True, "id": id, "player": player}), 200
+    if games[id].getPlayerCount() < 2:
+        player = Player(random_string(10))
+        games[id].addPlayer(player)
+        return jsonify({
+            "joined": True,
+            "id": games[id].gameID,
+            "player": player.playerID
+        }), 200
     else:
-        return jsonify({"joined": False, "id": id}), 403
+        return jsonify({
+            "joined": False,
+            "id": id
+        }), 403
 
 
-@app.route("/api/stopgame", methods=["POST"])
+@app.route("/api/game/stop", methods=["POST"])
 def stop_game():
     id = request.json["id"]
     if id in games:
@@ -46,6 +60,30 @@ def stop_game():
     else:
         return "", 404
 
+
+@app.route("/api/game/current", methods=["GET"])
+def get_current_player():
+    id = request.args["id"]
+    if id in games:
+        return jsonify({
+            "id": id,
+            "current": games[id].players.items()[games[id].currentPlayer][0]
+        }), 200
+    else:
+        return "", 404
+
+
+@app.route("/api/game/next", methods=["POST"])
+def next_turn():
+    id = request.json["id"]
+    if id in games:
+        games[id].next()
+        return jsonify({
+            "id": id,
+            "current": games[id].players.items()[games[id].currentPlayer][0]
+        }), 200
+    else:
+        return "", 404
 
 if __name__ == "__main__":
     key = "dev"
