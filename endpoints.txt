@@ -1,4 +1,0 @@
-/api/game/new POST {"id": <string>} -- start a new game or join existing one
-/api/game/stop POST {"id": <string>} -- stop and existing game
-/api/game/current GET ?id=<string> -- get current player in turn
-/api/game/next POST {"id": <string>} -- finish current turn

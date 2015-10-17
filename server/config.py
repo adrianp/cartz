@@ -8,3 +8,5 @@ envs = {
         'port': 5000
     }
 }
+
+uid_length = 20
