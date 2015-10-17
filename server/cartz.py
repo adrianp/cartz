@@ -29,7 +29,7 @@ def index():
 
 
 @app.route("/api/game/new", methods=["POST"])
-def new_game():
+def game_new():
     id = request.json["id"]
 
     # if games does not exist, create id
@@ -52,7 +52,7 @@ def new_game():
 
 
 @app.route("/api/game/stop", methods=["POST"])
-def stop_game():
+def game_stop():
     id = request.json["id"]
     if id in games:
         del games[id]
@@ -61,8 +61,8 @@ def stop_game():
         return "", 404
 
 
-@app.route("/api/game/current", methods=["GET"])
-def get_current_player():
+@app.route("/api/game/state", methods=["GET"])
+def game_state():
     id = request.args["id"]
     if id in games:
         return jsonify({
@@ -74,7 +74,7 @@ def get_current_player():
 
 
 @app.route("/api/game/next", methods=["POST"])
-def next_turn():
+def game_next():
     id = request.json["id"]
     if id in games:
         games[id].next()
@@ -84,6 +84,22 @@ def next_turn():
         }), 200
     else:
         return "", 404
+
+
+@app.route("/api/game/play", methods=["POST"])
+def game_play():
+    gameID = request.json["id"]
+    cardID = request.json["card"]
+    return 501
+
+
+@app.route("/api/game/attack", methods=["POST"])
+def game_attack():
+    id = request.json["id"]
+    card = request.json["card"]
+    target = request.json["target"]
+    return 501
+
 
 if __name__ == "__main__":
     key = "dev"
