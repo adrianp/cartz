@@ -4,16 +4,13 @@ import sys
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
+import api
 from config import envs
-from data.game import Game
-from data.player import Player
-from utils import random_string
 
 
 app = Flask(__name__, static_url_path='')
 CORS(app)
 
-games = {}
 gitSHA = subprocess.check_output(["git", "rev-parse", "HEAD"]).strip()
 
 
@@ -30,75 +27,43 @@ def index():
 
 @app.route("/api/game/new", methods=["POST"])
 def game_new():
-    id = request.json["id"]
-
-    # if games does not exist, create id
-    if id not in games:
-        games[id] = Game(id)
-
-    if games[id].getPlayerCount() < 2:
-        player = Player(random_string(10))
-        games[id].addPlayer(player)
-        return jsonify({
-            "joined": True,
-            "id": games[id].gameID,
-            "player": player.playerID
-        }), 200
-    else:
-        return jsonify({
-            "joined": False,
-            "id": id
-        }), 403
+    r = api.game_new(request.json['id'])
+    return jsonify(r[0]), r[1]
 
 
 @app.route("/api/game/stop", methods=["POST"])
 def game_stop():
-    id = request.json["id"]
-    if id in games:
-        del games[id]
-        return "", 200
-    else:
-        return "", 404
+    return api.game_stop(request.json['id'])
 
 
-@app.route("/api/game/state", methods=["GET"])
+@app.route("/api/game/state", methods=["POST"])
 def game_state():
-    id = request.args["id"]
-    if id in games:
-        return jsonify({
-            "id": id,
-            "current": games[id].players.items()[games[id].currentPlayer][0]
-        }), 200
-    else:
-        return "", 404
+    r = api.game_state(request.json['id'], request.json['player'])
+    return jsonify(r[0]), r[1]
 
 
-@app.route("/api/game/next", methods=["POST"])
-def game_next():
-    id = request.json["id"]
-    if id in games:
-        games[id].next()
-        return jsonify({
-            "id": id,
-            "current": games[id].players.items()[games[id].currentPlayer][0]
-        }), 200
-    else:
-        return "", 404
+@app.route("/api/game/pass", methods=["POST"])
+def game_pass():
+    return api.game_pass(request.json['id'], request.json['user'])
 
 
 @app.route("/api/game/play", methods=["POST"])
 def game_play():
-    gameID = request.json["id"]
-    cardID = request.json["card"]
-    return 501
+    return api.game_play(
+        request.json['id'],
+        request.json['user'],
+        request.json['card']
+    )
 
 
 @app.route("/api/game/attack", methods=["POST"])
 def game_attack():
-    id = request.json["id"]
-    card = request.json["card"]
-    target = request.json["target"]
-    return 501
+    return api.game_attack(
+        request.json['id'],
+        request.json['user'],
+        request.json['card'],
+        request.json['target']
+    )
 
 
 if __name__ == "__main__":
