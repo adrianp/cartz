@@ -154,34 +154,51 @@ body.slide {
 .first-screen {
   position: relative;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   width: 100%;
   height: 100%;
-  background-color: #FA5923;
+  background-image: url('../img/background.png');
+  background-size: cover;
+  background-position: bottom right;
 }
 .first-screen .game-name {
   padding: 10px;
-  margin: 0 0 30px 0;
+  margin: 0 25px 0 0;
   background: none;
   border: none;
   outline: none;
   border-bottom: 2px solid #000;
   font-size: 30px;
-  cursor: pointer;
+  cursor: text;
+  color: #fff;
 }
 .first-screen .game-name:-webkit-input-placeholder {
   font-family: 'Raleway', sans-serif;
-  color: #000;
+  opacity: 0.2;
 }
 .first-screen .play-button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
   background: none;
   border: none;
   outline: none;
   font-family: 'Creepster', cursive;
   font-size: 4em;
   cursor: pointer;
+}
+.first-screen .play-button:before {
+  content: '';
+  position: relative;
+  width: 70px;
+  height: 60px;
+  margin: 0 10px 0 0;
+  background-image: url('../img/button.png');
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 .arena {
   position: relative;
