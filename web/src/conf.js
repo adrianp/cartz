@@ -1,5 +1,5 @@
-conf = {
-	maxCost = 6;
+const conf = {
+	maxCost: 6
 };
 
-module.exports.conf;
+module.exports.conf = conf;

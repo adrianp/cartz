@@ -8,6 +8,14 @@ class Card {
 		this.d = d;
 		this.c = c;
 		this.s = s;
+		this.hp = d;
+	}
+
+	damage(amount) {
+		this.hp -= amount;
+		if (this.hp < 0) {
+			this.dead = true;
+		}
 	}
 }
 
