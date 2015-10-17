@@ -46,10 +46,7 @@ def game_state(id, player):
 def game_pass(id, user):
     if id in games:
         games[id].next()
-        return ({
-            "id": id,
-            "current": games[id].players.items()[games[id].currentPlayer][0]
-        }, 200)
+        return ("", 200)
     else:
         return ("", 404)
 

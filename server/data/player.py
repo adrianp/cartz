@@ -35,7 +35,7 @@ class Player:
 
         r = {
             "hand": hand,
-            "played": self.played,
+            "played": map(lambda card: card.get_state(), self.played),
             "hp": self.hp,
             "mana": self.mana
         }
