@@ -43,4 +43,40 @@ response = app.post(
         "card": currentPlayer['hand'][0]['id']
     }),
     content_type='application/json')
-print response
+
+# pass turn to other player
+response = app.post(
+    "/api/game/pass",
+    data=json.dumps({
+        "id": gameID,
+        "player": currentPlayer['id']
+    }),
+    content_type='application/json')
+
+# get game status
+response = app.post(
+    "/api/game/state",
+    data=json.dumps({
+        "id": gameID,
+        "player": currentPlayer['id']
+    }),
+    content_type='application/json')
+
+# play a card
+response = app.post(
+    "/api/game/play",
+    data=json.dumps({
+        "id": gameID,
+        "player": currentPlayer['id'],
+        "card": currentPlayer['hand'][0]['id']
+    }),
+    content_type='application/json')
+
+# get game status
+response = app.post(
+    "/api/game/state",
+    data=json.dumps({
+        "id": gameID,
+        "player": playerOne
+    }),
+    content_type='application/json')

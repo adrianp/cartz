@@ -44,7 +44,8 @@ def game_state():
 
 @app.route("/api/game/pass", methods=["POST"])
 def game_pass():
-    return api.game_pass(request.json['id'], request.json['user'])
+    r = api.game_pass(request.json['id'], request.json['player'])
+    return jsonify(r[0]), r[1]
 
 
 @app.route("/api/game/play", methods=["POST"])
