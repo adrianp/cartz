@@ -90,7 +90,6 @@
 		"no-new": 0,
 		"no-octal-escape": 2,
 		"no-octal": 2,
-		"no-param-reassign": 2,
 		"no-process-env": 2,
 		"no-proto": 2,
 		"no-redeclare": 2,
@@ -197,7 +196,6 @@
 		"max-len": [2, 120, 4],
 		"max-params": [2, 6],
 		"max-statements": [2, 30],
-		"no-bitwise": 2,
-		"no-plusplus": 2
+		"no-bitwise": 2
 	}
 }
