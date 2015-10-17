@@ -25,6 +25,9 @@ class Game:
         if self.getPlayerCount() == 2:
             self.currentPlayer = (self.currentPlayer + 1) % 2
 
+    def play(self, user, card):
+        return self.players[user].play(card)
+
     def get_state(self, player):
         currentPlayer = self.players.items()[self.currentPlayer][0]
         return {

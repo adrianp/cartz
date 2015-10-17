@@ -49,11 +49,12 @@ def game_pass():
 
 @app.route("/api/game/play", methods=["POST"])
 def game_play():
-    return api.game_play(
+    r = api.game_play(
         request.json['id'],
-        request.json['user'],
+        request.json['player'],
         request.json['card']
     )
+    return jsonify(r[0]), r[1]
 
 
 @app.route("/api/game/attack", methods=["POST"])

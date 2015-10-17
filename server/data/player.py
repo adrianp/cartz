@@ -16,6 +16,18 @@ class Player:
             self.hand.append(card)
             self.deck.remove(card)
 
+    def play(self, cardID):
+        card = None
+        for c in self.hand:
+            if c.id == cardID:
+                card = c
+
+        if card is not None and card.cost <= self.mana:
+            self.played.append(card)
+            self.hand.remove(card)
+            return True
+        return False
+
     def get_state(self, me):
         hand = map(lambda card: card.get_state(), self.hand)
         if not me:

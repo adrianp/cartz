@@ -12,8 +12,7 @@ response = app.post(
     data=json.dumps({
         "id": gameID
     }),
-    content_type='application/json',
-)
+    content_type='application/json')
 playerOne = json.loads(response.data)['player']
 
 # register second player
@@ -22,8 +21,7 @@ response = app.post(
     data=json.dumps({
         "id": gameID
     }),
-    content_type='application/json',
-)
+    content_type='application/json')
 playerTwo = json.loads(response.data)['player']
 
 # get game status
@@ -33,6 +31,16 @@ response = app.post(
         "id": gameID,
         "player": playerOne
     }),
-    content_type='application/json',
-)
-print json.loads(response.data)
+    content_type='application/json')
+currentPlayer = json.loads(response.data)['player']
+
+# play a card
+response = app.post(
+    "/api/game/play",
+    data=json.dumps({
+        "id": gameID,
+        "player": currentPlayer['id'],
+        "card": currentPlayer['hand'][0]['id']
+    }),
+    content_type='application/json')
+print response
