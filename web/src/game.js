@@ -1,13 +1,4 @@
 const net = require('./net.js');
-const playerReady = require('./events.js').playerReady;
-
-const init = () => {
-	net.getState().then((resp) => {
-		console.log('state', resp);
-	});
-
-	document.dispatchEvent(playerReady);
-};
 
 const playCard = (i) => {
 	// player.play(i);
@@ -32,11 +23,7 @@ document.addEventListener('attack', attack);
 document.addEventListener('placeCard', placeCard);
 document.addEventListener('playCard', playCard);
 
-const updateGameState = (state) => {
-
-};
-
-const state = {
+let currentState = {
 	player: {
 		hand: [],
 		played: [],
@@ -52,4 +39,20 @@ const state = {
 	turn: 'player'
 };
 
-module.exports.init = init;
+const getCurrentState = () => {
+	return currentState;
+};
+
+const stateChanged = new CustomEvent('stateChanged', {'detail': getCurrentState()});
+
+const updateGameState = () => {
+	document.dispatchEvent(stateChanged);
+
+	net.getState().then((resp) => {
+		console.log('state', resp);
+		currentState = resp.state;
+		document.dispatchEvent(stateChanged);
+	});
+};
+
+module.exports.updateGameState = updateGameState;

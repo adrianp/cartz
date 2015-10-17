@@ -1,5 +1,8 @@
 const dom = require('./DOMaker.js');
-const events = require('./events.js');
+
+document.addEventListener('stateChanged', (e) => {
+	console.log('e', e.detail);
+});
 
 export class Card {
 	constructor() {
@@ -186,19 +189,23 @@ document.addEventListener('playerReady', (state) => {
 });
 
 // document.getElementById('endTurn').addEventListener('click', () => {
-//     document.dispatchEvent(events.endTurn);
+// 	document.dispatchEvent(new Event('endTurn'));
 // });
-// 
-// document.getElementById('attack').addEventListener('click', () => {
-//     document.dispatchEvent(events.attack);
+//
+// document.getElementById('attacker').addEventListener('click', () => {
+// 	document.dispatchEvent(new Event('attack', {'detail': index}));
 // });
-// 
+//
+// document.getElementById('attacked').addEventListener('click', () => {
+// 	document.dispatchEvent(new Event('attack', {'detail': index}));
+// });
+//
 // document.getElementById('placeCard').addEventListener('click', () => {
-//     document.dispatchEvent(events.placeCard);
+// 	document.dispatchEvent(new Event('placeCard', {'detail': index}));
 // });
-// 
+//
 // document.getElementById('playCard').addEventListener('click', () => {
-//     document.dispatchEvent(events.playCard);
+// 	document.dispatchEvent(new Event('playCard', {'detail': index}));
 // });
 
 module.exports.createGameZone = createGameZone;

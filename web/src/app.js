@@ -8,7 +8,7 @@ document.getElementById('play').addEventListener('click', () => {
 		if (resp.joined) {
 			console.log('success joining game:' + gameName);
 			ui.createGameZone();
-			game.init();
+			game.updateGameState();
 		} else {
 			console.info('game already full');
 		}
