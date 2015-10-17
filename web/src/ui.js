@@ -5,14 +5,22 @@ document.addEventListener('stateChanged', (e) => {
 	updateUi(e.detail);
 });
 
-const addCard = (cardInfos, opponent, battlefield) => {
-	//
-	console.log(cardInfos);
+const genericCard = {
+	"attack": 1,
+	"cost": 1,
+	"defense": 1,
+	"id": "",
+	"name": "b"
+};
+
+const addCard = (opponent, battlefield, cardInfo = genericCard) => {
+	// console.log(cardInfo.id);
 	const card = dom({
 		'type': 'div',
 		'attributes': {
 			'class': 'card' +
-				(opponent === true ? ' flipped' : '')
+				(opponent === true ? ' flipped' : ''),
+			'style': `background-image: url("img/cards/${cardInfo.name}.png")`
 		},
 		'content': [
 			dom({
@@ -20,21 +28,21 @@ const addCard = (cardInfos, opponent, battlefield) => {
 				'attributes': {
 					'class': 'mana'
 				},
-				'content': 'ceva'
+				'content': cardInfo.cost
 			}),
 			dom({
 				'type': 'div',
 				'attributes': {
 					'class': 'attack'
 				},
-				'content': 'ceva'
+				'content': cardInfo.attack
 			}),
 			dom({
 				'type': 'div',
 				'attributes': {
 					'class': 'defense'
 				},
-				'content': 'ceva'
+				'content': cardInfo.defense
 			})
 		]
 	});
@@ -175,17 +183,16 @@ const createGameZone = () => {
 
 const updateUi = (state) => {
 	for(let playerHand of state.player.hand) {
-		console.log(playerHand);
-	    addCard(playerHand, false, false);
+	    addCard(false, false, playerHand);
 	}
 	for(let playerPlayed of state.player.played) {
-	    addCard(playerPlayed, false, true);
+	    addCard(false, true, playerPlayed);
 	}
 	for(let enemyPlayed of state.enemy.played) {
-	    addCard(enemyPlayed, true, true);
+	    addCard(true, true, enemyPlayed);
 	}
 	for (let i = 0; i < state.enemy.hand; i++) {
-		addCard(null, true, false);
+		addCard(true, false);
 	}
 	document.getElementById('heroLife').textContent = state.player.hp;
 	document.getElementById('opponentLife').textContent = state.enemy.hp;
