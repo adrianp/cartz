@@ -174,13 +174,14 @@ const createGameZone = () => {
 };
 
 const updateUi = (state) => {
-	for(playerHand of state.player.hand) {
+	for(let playerHand of state.player.hand) {
+		console.log(playerHand);
 	    addCard(playerHand, false, false);
 	}
-	for(playerPlayed of state.player.played) {
+	for(let playerPlayed of state.player.played) {
 	    addCard(playerPlayed, false, true);
 	}
-	for(enemyPlayed of state.enemy.played) {
+	for(let enemyPlayed of state.enemy.played) {
 	    addCard(enemyPlayed, true, true);
 	}
 	for (let i = 0; i < state.enemy.hand; i++) {
