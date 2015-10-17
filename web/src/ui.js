@@ -55,6 +55,14 @@ const createGameZone = () => {
 	document.body.className += 'slide';
 };
 
+const updateUi = (state) => {
+	// parcurge state si deseneaza ui-ul in functie de ce contine state
+};
+
+document.addEventListener('playerReady', (state) => {
+	updateUi(state);
+});
+
 // document.getElementById('endTurn').addEventListener('click', () => {
 //     document.dispatchEvent(events.endTurn);
 // });
