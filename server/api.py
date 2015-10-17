@@ -55,7 +55,12 @@ def game_pass(id, user):
 
 
 def game_play(id, user, card):
-    return ("", 501)
+    if id in games:
+        if games[id].play(user, card):
+            return ("", 200)
+        else:
+            return ("", 403)
+    return ("", 404)
 
 
 def game_attack(id, user, card, target):
