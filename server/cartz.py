@@ -2,15 +2,15 @@ import sys
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-import random
-import string
 
 from config import envs
 from data.player import Player
+from utils import random_string
 
 
 app = Flask(__name__, static_url_path='')
 CORS(app)
+
 games = {}
 
 
@@ -30,11 +30,22 @@ def new_game():
     noPlayers = len(games[id]["players"].keys())
 
     if noPlayers < 2:
-        player = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
+        player = random_string(10)
         games[id]["players"][player] = Player(player)
         return jsonify({"joined": True, "id": id, "player": player}), 200
     else:
         return jsonify({"joined": False, "id": id}), 403
+
+
+@app.route("/api/stopgame", methods=["POST"])
+def stop_game():
+    id = request.json["id"]
+    if id in games:
+        del games[id]
+        return "", 200
+    else:
+        return "", 404
+
 
 if __name__ == "__main__":
     key = "dev"
