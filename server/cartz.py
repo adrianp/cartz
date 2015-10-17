@@ -1,6 +1,7 @@
 import sys
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 import random
 import string
 
@@ -9,6 +10,7 @@ from data.player import Player
 
 
 app = Flask(__name__, static_url_path='')
+CORS(app)
 games = {}
 
 
@@ -19,7 +21,7 @@ def index():
 
 @app.route("/api/newgame", methods=["POST"])
 def new_game():
-    id = request.form["id"]
+    id = request.json["id"]
 
     # if games does not exist, create id
     if id not in games:
