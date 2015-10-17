@@ -1,8 +1,10 @@
-const playerReady = new Event('playerReady');
+const net = require('./net.js');
+const playerReady = require('./events.js').playerReady;
 
 const init = () => {
-	const player = new Player();
-	player.init();
+	net.getState().then((resp) => {
+		console.log('state', resp);
+	});
 
 	document.dispatchEvent(playerReady);
 };
@@ -30,7 +32,6 @@ document.addEventListener('attack', attack);
 document.addEventListener('placeCard', placeCard);
 document.addEventListener('playCard', playCard);
 
-
 const updateGameState = (state) => {
 
 };
@@ -50,3 +51,5 @@ const state = {
 	},
 	turn: 'player'
 };
+
+module.exports.init = init;

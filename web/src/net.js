@@ -36,16 +36,14 @@ const attack = (attackerIndex, attackedIndex) => {
 };
 
 const playCard = (index) => {
-	fetch(host + '/api/playCard', {
-		method,
-		headers,
-		body: JSON.stringify({index})
-	})
-	.then((response) => {
-		return response.json();
-	})
-	.then((body) => {
-		console.log(body);
+	return new Promise((resolve, reject) => {
+		fetch(host + '/api/playCard', {
+			method,
+			headers,
+			body: JSON.stringify({index})
+		})
+		.then((response) => response.json(), reject)
+		.then((body) => resolve(body), reject);
 	});
 };
 
@@ -60,12 +58,10 @@ const endTurn = () => {
 };
 
 const getState = () => {
-	fetch(host + '/api/getState')
-	.then((response) => {
-		return response.json();
-	})
-	.then((body) => {
-		console.log(body);
+	return new Promise((resolve, reject) => {
+		fetch(host + '/api/getState')
+		.then((response) => response.json(), reject)
+		.then((body) => resolve(body), reject);
 	});
 };
 

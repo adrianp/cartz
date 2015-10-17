@@ -58,15 +58,15 @@ const createGameZone = () => {
 // document.getElementById('endTurn').addEventListener('click', () => {
 //     document.dispatchEvent(events.endTurn);
 // });
-// 
+//
 // document.getElementById('attack').addEventListener('click', () => {
 //     document.dispatchEvent(events.attack);
 // });
-// 
+//
 // document.getElementById('placeCard').addEventListener('click', () => {
 //     document.dispatchEvent(events.placeCard);
 // });
-// 
+//
 // document.getElementById('playCard').addEventListener('click', () => {
 //     document.dispatchEvent(events.playCard);
 // });
