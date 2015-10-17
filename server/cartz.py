@@ -72,4 +72,9 @@ if __name__ == "__main__":
     if len(sys.argv) > 1 and "prod" in sys.argv:
         key = "prod"
 
-    app.run(host=envs[key]["host"], port=envs[key]["port"], debug=key == "dev")
+    app.run(
+        threaded=True,
+        host=envs[key]["host"],
+        port=envs[key]["port"], 
+        debug=key == "dev"
+    )
