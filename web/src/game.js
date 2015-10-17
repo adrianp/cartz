@@ -29,3 +29,24 @@ document.addEventListener('endTurn', endTurn);
 document.addEventListener('attack', attack);
 document.addEventListener('placeCard', placeCard);
 document.addEventListener('playCard', playCard);
+
+
+const updateGameState = (state) => {
+
+};
+
+const state = {
+	player: {
+		hand: [],
+		played: [],
+		hp: 30,
+		mana: 1
+	},
+	enemy: {
+		hand: 3,
+		played: [],
+		hp: 30,
+		mana: 1
+	},
+	turn: 'player'
+};
