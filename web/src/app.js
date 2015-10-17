@@ -1,4 +1,5 @@
 const net = require('./net.js');
+require('./firstPage.js');
 require('./events.js');
 
 net.joinGame('gigi').then((resp) => {
