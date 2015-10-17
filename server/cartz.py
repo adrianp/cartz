@@ -1,8 +1,11 @@
 import sys
 
 from flask import Flask, request, jsonify
+import random
+import string
 
 from config import envs
+from data.player import Player
 
 
 app = Flask(__name__, static_url_path='')
@@ -20,13 +23,14 @@ def new_game():
 
     # if games does not exist, create id
     if id not in games:
-        games[id] = {"players": 0, "id": id}
+        games[id] = {"players": {}, "id": id}
 
-    noPlayers = games[id]["players"]
+    noPlayers = len(games[id]["players"].keys())
 
     if noPlayers < 2:
-        games[id]["players"] += 1
-        return jsonify({"joined": True, "id": id}), 200
+        player = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
+        games[id]["players"][player] = Player(player)
+        return jsonify({"joined": True, "id": id, "player": player}), 200
     else:
         return jsonify({"joined": False, "id": id}), 403
 
