@@ -1,4 +1,4 @@
-const host = 'http://192.168.2.121:5000';
+const host = 'http://192.168.2.121:8080';
 
 const newGame = (gameId) => {
 	fetch(host + '/api/newgame', {
