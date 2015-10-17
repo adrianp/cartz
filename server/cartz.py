@@ -36,6 +36,17 @@ def new_game():
     else:
         return jsonify({"joined": False, "id": id}), 403
 
+
+@app.route("/api/stopgame", methods=["POST"])
+def stop_game():
+    id = request.json["id"]
+    if id in games:
+        del games[id]
+        return "", 200
+    else:
+        return "", 404
+
+
 if __name__ == "__main__":
     key = "dev"
     if len(sys.argv) > 1 and "prod" in sys.argv:
