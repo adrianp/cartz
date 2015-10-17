@@ -13,6 +13,7 @@
   "author": "Lucian Parfeni",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^3.10.1",
     "pixi.js": "^3.0.7",
     "watchify": "^3.4.0"
   }
