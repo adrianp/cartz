@@ -1,5 +1,5 @@
 {
-  "name": "cărtz client",
+  "name": "cartzclient",
   "version": "1.0.0",
   "description": "joc de cărtz",
   "main": "index.js",
@@ -13,6 +13,7 @@
   "author": "Lucian Parfeni",
   "license": "MIT",
   "dependencies": {
-    "pixi.js": "^3.0.7"
+    "pixi.js": "^3.0.7",
+    "watchify": "^3.4.0"
   }
 }
