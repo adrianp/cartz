@@ -1,3 +1,4 @@
+import subprocess
 import sys
 
 from flask import Flask, request, jsonify
@@ -13,11 +14,12 @@ app = Flask(__name__, static_url_path='')
 CORS(app)
 
 games = {}
+gitSHA = subprocess.check_output(["git", "rev-parse", "HEAD"]).strip()
 
 
 @app.after_request
 def apply_caching(response):
-    response.headers["X-API-Version"] = "1.0.0"
+    response.headers["X-API-Version"] = gitSHA
     return response
 
 
