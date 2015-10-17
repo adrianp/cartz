@@ -134,7 +134,6 @@ body {
   position: relative;
   width: 100%;
   height: 100%;
-  overflow: hidden;
 }
 * {
   box-sizing: border-box;
@@ -142,9 +141,15 @@ body {
 body {
   transition: transform 0.5s linear;
   will-change: transform;
+  overflow: hidden;
 }
 body.slide {
   transform: translateY(-100%);
+}
+#appWrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 .first-screen {
   position: relative;
@@ -180,7 +185,46 @@ body.slide {
 }
 .arena {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
   width: 100%;
   height: 100%;
   background-color: #191919;
+}
+.player-wrapper {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 150px;
+  background-color: red;
+}
+.player-wrapper.opponent {
+  align-self: flex-start;
+}
+.player-wrapper.hero {
+  align-self: flex-end;
+}
+.player-wrapper .player-details {
+  display: flex;
+  flex-direction: row;
+  width: 20%;
+  border-right: 2px solid #000;
+}
+.player-wrapper .player-details .mana,
+.player-wrapper .player-details .life {
+  width: 50%;
+}
+.player-wrapper .player-details .mana {
+  background-color: green;
+  color: #fff;
+}
+.player-wrapper .player-details .life {
+  background-color: yellow;
+  color: #000;
+}
+.player-wrapper .cards-wrapper {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
 }

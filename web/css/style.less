@@ -12,10 +12,18 @@
 body{
     transition: transform 0.5s linear;
     will-change: transform;
+    overflow: hidden;
 
     &.slide{
         transform: translateY(-100%);
     }
+}
+
+#appWrapper{
+    position: relative;
+
+    width: 100%;
+    height: 100%;
 }
 
 // first screen style;
@@ -68,8 +76,60 @@ body{
 .arena{
     position: relative;
 
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
     width: 100%;
     height: 100%;
 
     background-color: #191919;
+}
+
+.player-wrapper{
+    display: flex;
+    flex-direction: row;
+
+    width: 100%;
+    height: 150px;
+
+    background-color: red;
+
+    &.opponent{
+        align-self: flex-start;
+    }
+
+    &.hero{
+        align-self: flex-end;
+    }
+
+    .player-details{
+        display: flex;
+        flex-direction: row;
+
+        width: 20%;
+        border-right: 2px solid #000;
+
+        .mana, .life{
+            width: 50%;
+        }
+
+        .mana{
+            background-color: green;
+            color: #fff;
+        }
+
+        .life{
+            background-color: yellow;
+            color: #000;
+        }
+
+    }
+
+    .cards-wrapper{
+        display: flex;
+        flex-direction: row;
+
+        padding: 10px;
+    }
 }
