@@ -105,3 +105,8 @@ docs/_build/
 
 # PyBuilder
 target/
+
+
+# JS #
+web/bin
+web/lib
