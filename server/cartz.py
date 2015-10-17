@@ -28,7 +28,7 @@ def index():
     return app.send_static_file("index.html")
 
 
-@app.route("/api/newgame", methods=["POST"])
+@app.route("/api/game/new", methods=["POST"])
 def new_game():
     id = request.json["id"]
 
@@ -38,7 +38,7 @@ def new_game():
 
     if games[id].getPlayerCount() < 2:
         player = Player(random_string(10))
-        games[id].addPlayer = player
+        games[id].addPlayer(player)
         return jsonify({
             "joined": True,
             "id": games[id].gameID,
@@ -51,7 +51,7 @@ def new_game():
         }), 403
 
 
-@app.route("/api/stopgame", methods=["POST"])
+@app.route("/api/game/stop", methods=["POST"])
 def stop_game():
     id = request.json["id"]
     if id in games:
@@ -60,6 +60,30 @@ def stop_game():
     else:
         return "", 404
 
+
+@app.route("/api/game/current", methods=["GET"])
+def get_current_player():
+    id = request.args["id"]
+    if id in games:
+        return jsonify({
+            "id": id,
+            "current": games[id].players.items()[games[id].currentPlayer][0]
+        }), 200
+    else:
+        return "", 404
+
+
+@app.route("/api/game/next", methods=["POST"])
+def next_turn():
+    id = request.json["id"]
+    if id in games:
+        games[id].next()
+        return jsonify({
+            "id": id,
+            "current": games[id].players.items()[games[id].currentPlayer][0]
+        }), 200
+    else:
+        return "", 404
 
 if __name__ == "__main__":
     key = "dev"
