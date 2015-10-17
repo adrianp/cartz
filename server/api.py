@@ -18,7 +18,8 @@ def game_new(id):
         return ({
             "joined": True,
             "id": games[id].id,
-            "player": player.id
+            "player": player.id,
+            "started": games[id].started
         }, 200)
     else:
         return ({

@@ -6,6 +6,7 @@ class Game:
         self.players = OrderedDict()
         self.id = gameID
         self.currentPlayer = 0
+        self.started = false
 
     def start(self):
         for _, player in self.players.iteritems():
@@ -17,6 +18,7 @@ class Game:
     def addPlayer(self, player):
         self.players[player.id] = player
         if len(self.players.items()) == 2:
+            self.started = false
             self.start()
 
     def next(self):
