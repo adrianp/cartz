@@ -20,11 +20,16 @@ const joinGame = (gameId) => {
 	});
 };
 
-const attack = (attackerIndex, attackedIndex) => {
+const attack = (gameId, userId, attackerIndex, attackedIndex) => {
 	fetch(host + api + 'playCard', {
 		method,
 		headers,
-		body: JSON.stringify({attackerIndex, attackedIndex})
+		body: JSON.stringify({
+			id: gameId,
+			player: userId,
+			card: attackerIndex,
+			target: attackedIndex
+		})
 	})
 	.then((response) => {
 		return response.json();
@@ -36,27 +41,34 @@ const attack = (attackerIndex, attackedIndex) => {
 	});
 };
 
-const playCard = (index) => {
+const playCard = (gameId, userId, cardId) => {
 	return new Promise((resolve, reject) => {
-		fetch(host + api + 'playCard', {
+		fetch(host + api + 'play', {
 			method,
 			headers,
-			body: JSON.stringify({index})
+			body: JSON.stringify({
+				id: gameId,
+				player: userId,
+				card: cardId
+			})
 		})
-		.then((response) => response.json(), reject)
-		.then((body) => resolve(body), reject);
+		.then((response) => {
+			resolve(response);
+		}, reject);
+		// .then((body) => resolve(body), reject);
 	});
 };
 
-// const endTurn = () => {
-// 	fetch(host + '/api/endTurn')
-// 	.then((response) => {
-// 		return response.json();
-// 	})
-// 	.then((body) => {
-// 		console.log(body);
-// 	});
-// };
+const endTurn = (gameId, userId) => {
+	return new Promise((resolve, reject) => {
+		fetch(host + api + 'pass', {
+			method,
+			headers,
+			body: JSON.stringify({id: gameId, player: userId})
+		})
+		.then((response) => resolve(response), reject);
+	});
+};
 
 const getState = (gameId, userId) => {
 	return new Promise((resolve, reject) => {
@@ -75,5 +87,8 @@ const getState = (gameId, userId) => {
 //
 // };
 
+module.exports.attack = attack;
+module.exports.endTurn = endTurn;
+module.exports.playCard = playCard;
 module.exports.getState = getState;
 module.exports.joinGame = joinGame;

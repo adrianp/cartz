@@ -108,5 +108,5 @@ target/
 
 
 # JS #
-web/bin
+# web/bin
 web/lib

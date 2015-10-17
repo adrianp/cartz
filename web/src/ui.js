@@ -173,14 +173,14 @@ const createGameZone = () => {
 };
 
 const updateUi = (state) => {
-	for(playerHand of state.player.hand) {
-	    addCard(null, false, false);
+	for (playerHand of state.player.hand) {
+		addCard(null, false, false);
 	}
-	for(playerPlayed of state.player.played) {
-	    addCard(null, false, true);
+	for (playerPlayed of state.player.played) {
+		addCard(null, false, true);
 	}
-	for(enemyPlayed of state.enemy.played) {
-	    addCard(null, true, true);
+	for (enemyPlayed of state.enemy.played) {
+		addCard(null, true, true);
 	}
 	for (let i = state.enemy.hand; i > 0; i--) {
 		addCard(null, true, false);
@@ -221,10 +221,6 @@ document.addEventListener('stateChanged', () => {
 //
 // document.getElementById('attacked').addEventListener('click', () => {
 // 	document.dispatchEvent(new Event('attack', {'detail': index}));
-// });
-//
-// document.getElementById('placeCard').addEventListener('click', () => {
-// 	document.dispatchEvent(new Event('placeCard', {'detail': index}));
 // });
 //
 // document.getElementById('playCard').addEventListener('click', () => {
