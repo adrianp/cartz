@@ -176,7 +176,6 @@ body.slide {
 }
 .first-screen .game-name:-webkit-input-placeholder {
   font-family: 'Raleway', sans-serif;
-  opacity: 0.2;
 }
 .first-screen .play-button {
   display: flex;
@@ -241,6 +240,20 @@ body.slide {
   display: flex;
   flex-direction: row;
   padding: 10px;
+}
+.end-turn {
+  position: absolute;
+  bottom: 150px;
+  right: 0;
+  width: 120px;
+  height: 50px;
+  padding: 10px;
+  background-color: red;
+  font-family: 'Raleway', sans-serif;
+  font-size: 22px;
+  color: #000;
+  text-align: center;
+  cursor: pointer;
 }
 .card {
   position: relative;

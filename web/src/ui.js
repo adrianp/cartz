@@ -136,6 +136,15 @@ const createGameZone = () => {
 					})
 				]
 			}),
+			// end turn button
+			dom({
+				'type': 'div',
+				'attributes': {
+					'id': 'endTurn',
+					'class': 'end-turn'
+				},
+				'content': 'End turn'
+			}),
 			// my hero details wrapper
 			dom({
 				'type': 'div',
