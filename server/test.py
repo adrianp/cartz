@@ -1,17 +1,38 @@
-import api
+import json
 
+import cartz
+
+
+app = cartz.app.test_client()
 gameID = "test"
 
 # register first player
-response = api.game_new(id=gameID)[0]
-playerOne = response['player']
+response = app.post(
+    "/api/game/new",
+    data=json.dumps({
+        "id": gameID
+    }),
+    content_type='application/json',
+)
+playerOne = json.loads(response.data)['player']
 
 # register second player
-response = api.game_new(id=gameID)[0]
-playerTwo = response['player']
-
-print playerOne, playerTwo
+response = app.post(
+    "/api/game/new",
+    data=json.dumps({
+        "id": gameID
+    }),
+    content_type='application/json',
+)
+playerTwo = json.loads(response.data)['player']
 
 # get game status
-response = api.game_state(id=gameID, player=playerOne)[0]
-print response
+response = app.post(
+    "/api/game/state",
+    data=json.dumps({
+        "id": gameID,
+        "player": playerOne
+    }),
+    content_type='application/json',
+)
+print json.loads(response.data)
